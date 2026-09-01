@@ -32,38 +32,81 @@ To implement HASH ALGORITHM
 #include <stdio.h>
 #include <string.h>
 
-unsigned long hashFunction(char *str)
-{
-    unsigned long hash = 5381;
-    int c;
+#define KEY 7
 
-    while ((c = *str++))
-    {
-        hash = ((hash << 5) + hash) + c;
+// XOR Encryption
+void encrypt(char text[], char encrypted[]) {
+    int i;
+
+    for (i = 0; text[i] != '\0'; i++) {
+        encrypted[i] = text[i] ^ KEY;
+    }
+
+    encrypted[i] = '\0';
+}
+
+// XOR Decryption
+void decrypt(char encrypted[], char decrypted[]) {
+    int i;
+
+    for (i = 0; encrypted[i] != '\0'; i++) {
+        decrypted[i] = encrypted[i] ^ KEY;
+    }
+
+    decrypted[i] = '\0';
+}
+
+// Simple hash function
+unsigned long hashFunction(char text[]) {
+    unsigned long hash = 5381;
+    int i;
+
+    for (i = 0; text[i] != '\0'; i++) {
+        hash = ((hash << 5) + hash) + text[i];
     }
 
     return hash;
 }
 
-int main()
-{
+int main() {
     char message[100];
+    char encrypted[100];
+    char decrypted[100];
+    unsigned long hash;
 
     printf("Enter the message: ");
     fgets(message, sizeof(message), stdin);
 
+    // Remove newline
     message[strcspn(message, "\n")] = '\0';
 
-    printf("\nOriginal Message: %s\n", message);
-    printf("Hash Value: %lu\n", hashFunction(message));
+    // Generate hash
+    hash = hashFunction(message);
+
+    // Encryption
+    encrypt(message, encrypted);
+
+    // Decryption
+    decrypt(encrypted, decrypted);
+
+    printf("Original Message : %s\n", message);
+
+    printf("Hash Value       : %lu\n", hash);
+
+    printf("Encrypted Message: ");
+    for (int i = 0; encrypted[i] != '\0'; i++) {
+        printf("%02X ", (unsigned char)encrypted[i]);
+    }
+
+    printf("\nDecrypted Message: %s\n", decrypted);
 
     return 0;
 }
 ```
 
 ## Output:
-<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/b401d104-c8a9-4989-9eed-3f44e581e3ec" />
 
+<img width="740" height="280" alt="image" src="https://github.com/user-attachments/assets/d7972a77-ab45-4fae-97a3-683f7a067ab9" />
 
 ## Result:
 The program is executed successfully.
