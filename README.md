@@ -1,5 +1,6 @@
 # EX-NO14-HASH-ALGORITHM
-
+### NAME: VIJAYAKUMAR S
+### REG NO: 212224040359
 ## AIM:
 To implement HASH ALGORITHM
 
@@ -27,9 +28,42 @@ To implement HASH ALGORITHM
 
 
 ## Program:
+```
+#include <stdio.h>
+#include <string.h>
 
+unsigned long hashFunction(char *str)
+{
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *str++))
+    {
+        hash = ((hash << 5) + hash) + c;
+    }
+
+    return hash;
+}
+
+int main()
+{
+    char message[100];
+
+    printf("Enter the message: ");
+    fgets(message, sizeof(message), stdin);
+
+    message[strcspn(message, "\n")] = '\0';
+
+    printf("\nOriginal Message: %s\n", message);
+    printf("Hash Value: %lu\n", hashFunction(message));
+
+    return 0;
+}
+```
 
 ## Output:
+<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/b401d104-c8a9-4989-9eed-3f44e581e3ec" />
+
 
 ## Result:
 The program is executed successfully.
